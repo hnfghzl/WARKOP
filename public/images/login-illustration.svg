@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F59F6"/>
+      <stop offset="100%" stop-color="#7079FF"/>
+    </linearGradient>
+    <linearGradient id="screenEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3C45D8"/>
+      <stop offset="100%" stop-color="#555FE6"/>
+    </linearGradient>
+    <linearGradient id="padlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5D9"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="padlockSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0096C7"/>
+      <stop offset="100%" stop-color="#0077B6"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7675"/>
+      <stop offset="100%" stop-color="#D63031"/>
+    </linearGradient>
+    <linearGradient id="tileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0E7FF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#C7D2FE" stop-opacity="0.4"/>
+    </linearGradient>
+    <filter id="shadowFilter" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#312E81" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Ground Plane Isometric Grid / Tiles -->
+  <g opacity="0.6">
+    <!-- Diamond Tile 1 -->
+    <path d="M70 280 L100 265 L130 280 L100 295 Z" fill="url(#tileGrad)"/>
+    <!-- Diamond Tile 2 -->
+    <path d="M120 340 L160 320 L200 340 L160 360 Z" fill="url(#tileGrad)"/>
+    <!-- Diamond Tile 3 -->
+    <path d="M220 370 L250 355 L280 370 L250 385 Z" fill="url(#tileGrad)"/>
+    <!-- Diamond Tile 4 -->
+    <path d="M430 300 L460 285 L490 300 L460 315 Z" fill="url(#tileGrad)"/>
+    <!-- Diamond Tile 5 -->
+    <path d="M380 180 L410 165 L440 180 L410 195 Z" fill="url(#tileGrad)"/>
+  </g>
+
+  <!-- Large Standing Interface Screen / Tablet (Isometric Perspective) -->
+  <g filter="url(#shadowFilter)">
+    <!-- Back / Depth thickness -->
+    <path d="M110 260 L240 185 L240 195 L110 270 Z" fill="#2E37B4"/>
+    <path d="M240 185 L320 230 L320 240 L240 195 Z" fill="#1E27A2"/>
+    
+    <!-- Screen Border Frame -->
+    <path d="M110 260 L240 185 L240 50 L110 125 Z" fill="url(#screenEdge)"/>
+    <path d="M240 185 L320 230 L320 95 L240 50 Z" fill="#434EDF"/>
+    
+    <!-- Screen Front Face (Left tilted) -->
+    <path d="M118 252 L234 185 L234 60 L118 127 Z" fill="url(#screenGrad)"/>
+    
+    <!-- Screen Elements (Avatar & Data bars on screen) -->
+    <!-- Profile Circle on Screen -->
+    <ellipse cx="160" cy="180" rx="20" ry="24" fill="#FFFFFF" fill-opacity="0.25"/>
+    <circle cx="160" cy="172" r="8" fill="#FFFFFF" fill-opacity="0.8"/>
+    <path d="M148 194 C148 184 172 184 172 194 Z" fill="#FFFFFF" fill-opacity="0.8"/>
+    
+    <!-- Status / Info Bars on Screen -->
+    <path d="M190 120 L220 103" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+    <path d="M190 138 L215 124" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+    <path d="M190 154 L210 143" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Right Side Screen Face Elements -->
+    <path d="M255 180 L305 208" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+    <path d="M255 195 L295 218" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+  </g>
+
+  <!-- Green / Cyan Checkmark Badge (Floating Top-Left of Screen) -->
+  <g filter="url(#shadowFilter)">
+    <circle cx="120" cy="165" r="22" fill="#00E5D9"/>
+    <circle cx="120" cy="165" r="18" fill="#00D2D3"/>
+    <path d="M112 165 L118 171 L129 158" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Standing Document / Checklist Paper Sheet -->
+  <g filter="url(#shadowFilter)">
+    <!-- Document Body -->
+    <path d="M135 295 L180 270 L180 200 L135 225 Z" fill="#FFFFFF"/>
+    <path d="M180 270 L186 267 L186 197 L180 200 Z" fill="#E2E8F0"/>
+    <!-- Document Lines -->
+    <path d="M145 233 L165 222" stroke="#FF7675" stroke-width="3" stroke-linecap="round"/>
+    <path d="M145 247 L172 232" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M145 259 L168 246" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M145 271 L160 262" stroke="#00D2D3" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Pink / Coral ID Card on the Floor -->
+  <g filter="url(#shadowFilter)">
+    <path d="M200 315 L260 280 L285 295 L225 330 Z" fill="url(#cardGrad)"/>
+    <!-- Card Photo square -->
+    <path d="M212 313 L228 304 L236 308 L220 317 Z" fill="#FFFFFF" opacity="0.8"/>
+    <!-- Card Lines -->
+    <path d="M236 304 L254 294" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+    <path d="M230 316 L250 305" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- 3D Cyan Isometric Padlock (Gembok Keamanan) -->
+  <g filter="url(#shadowFilter)">
+    <!-- Metallic Shackle (Loop) -->
+    <path d="M355 210 L355 185 C355 160 380 145 395 155 C405 162 405 178 405 195 L405 220" 
+          stroke="#E2E8F0" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <path d="M355 210 L355 185 C355 160 380 145 395 155 C405 162 405 178 405 195 L405 220" 
+          stroke="#94A3B8" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.6"/>
+
+    <!-- Padlock Body Top Face -->
+    <path d="M335 220 L375 198 L420 220 L380 242 Z" fill="#00F5D4"/>
+    <!-- Padlock Body Left Face -->
+    <path d="M335 220 L380 242 L380 295 L335 273 Z" fill="url(#padlockGrad)"/>
+    <!-- Padlock Body Right Face -->
+    <path d="M380 242 L420 220 L420 273 L380 295 Z" fill="url(#padlockSide)"/>
+
+    <!-- Keyhole on Front -->
+    <circle cx="360" cy="254" r="5" fill="#0F172A" opacity="0.7"/>
+    <path d="M358 255 L362 255 L363 268 L357 268 Z" fill="#0F172A" opacity="0.7"/>
+  </g>
+</svg>

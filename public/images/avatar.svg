@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0E7FF"/>
+      <stop offset="100%" stop-color="#C7D2FE"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1E1B4B" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="60" cy="60" r="58" fill="url(#bgGrad)"/>
+
+  <!-- Hair Bun -->
+  <circle cx="60" cy="24" r="14" fill="url(#hairGrad)"/>
+  <circle cx="60" cy="22" r="12" fill="#334155"/>
+
+  <!-- Body / Shoulders -->
+  <path d="M26,110 C26,88 40,82 60,82 C80,82 94,88 94,110 Z" fill="url(#shirtGrad)" filter="url(#softShadow)"/>
+
+  <!-- Collar / Shirt V -->
+  <path d="M52,82 L60,94 L68,82 Z" fill="#EFF6FF"/>
+  <path d="M56,82 L60,88 L64,82 Z" fill="#DBEAFE"/>
+
+  <!-- Neck -->
+  <path d="M52,68 L52,82 L68,82 L68,68 Z" fill="#FBCFE8"/>
+  <path d="M52,70 C52,74 68,74 68,70 Z" fill="#F472B6" opacity="0.15"/>
+
+  <!-- Head / Face -->
+  <path d="M40,46 C40,32 50,28 60,28 C70,28 80,32 80,46 C80,62 70,72 60,72 C50,72 40,62 40,46 Z" fill="#FDE2E4"/>
+
+  <!-- Ears -->
+  <circle cx="39" cy="50" r="5" fill="#FDE2E4"/>
+  <circle cx="81" cy="50" r="5" fill="#FDE2E4"/>
+
+  <!-- Hair Front -->
+  <path d="M38,44 C38,30 48,26 60,26 C72,26 82,30 82,44 C82,46 80,44 76,38 C70,32 64,36 60,38 C56,36 50,32 44,38 C40,44 38,46 38,44 Z" fill="url(#hairGrad)"/>
+  <!-- Hair strands side -->
+  <path d="M38,42 C36,52 38,60 41,63 C40,58 39,52 40,44 Z" fill="url(#hairGrad)"/>
+  <path d="M82,42 C84,52 82,60 79,63 C80,58 81,52 80,44 Z" fill="url(#hairGrad)"/>
+
+  <!-- Eyebrows -->
+  <path d="M47,43 Q51,41 54,43" stroke="#334155" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+  <path d="M66,43 Q69,41 73,43" stroke="#334155" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyes -->
+  <ellipse cx="50.5" cy="48" rx="2.5" ry="3.2" fill="#1E293B"/>
+  <ellipse cx="69.5" cy="48" rx="2.5" ry="3.2" fill="#1E293B"/>
+  <!-- Eye highlights -->
+  <circle cx="51.5" cy="47" r="0.9" fill="#FFFFFF"/>
+  <circle cx="70.5" cy="47" r="0.9" fill="#FFFFFF"/>
+
+  <!-- Cute Blush -->
+  <ellipse cx="46" cy="54" rx="3.5" ry="2" fill="#FDA4AF" opacity="0.6"/>
+  <ellipse cx="74" cy="54" rx="3.5" ry="2" fill="#FDA4AF" opacity="0.6"/>
+
+  <!-- Nose -->
+  <path d="M60,49 Q61,53 59,54" stroke="#F472B6" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+
+  <!-- Smiling Lips -->
+  <path d="M54,58 Q60,64 66,58" stroke="#E11D48" stroke-width="2" stroke-linecap="round" fill="none"/>
+</svg>
