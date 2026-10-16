@@ -27,6 +27,20 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        /* Smooth floating sidebar dock styles */
+        #sidebarFloatingDock {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease;
+            will-change: transform;
+        }
+        #sidebarFloatingDock.is-floating {
+            background-color: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 1.5rem;
+            box-shadow: 0 16px 36px -10px rgba(59, 130, 246, 0.16), 0 0 0 1px rgba(226, 232, 240, 0.85);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
     </style>
 </head>
 <body class="{{ auth()->check() ? 'bg-gradient-to-br from-[#EEF2FF] via-[#F4F6FC] to-[#E0E7FF]' : 'bg-gradient-to-br from-[#5A63F7] via-[#6B73FF] to-[#8089FF]' }} text-slate-800 min-h-screen relative overflow-x-hidden selection:bg-indigo-600 selection:text-white">
@@ -35,16 +49,18 @@
     <div class="pointer-events-none fixed -bottom-40 -right-40 w-[500px] h-[500px] bg-indigo-400/15 rounded-full blur-[100px] z-0"></div>
 
     @auth
-        <div id="adminShell" class="relative z-10 p-2 sm:p-4 lg:p-6 min-h-screen flex items-center justify-center">
+        <div id="adminShell" class="relative z-10 p-2 sm:p-4 lg:p-6 min-h-screen flex items-start justify-center">
             <!-- Mobile Sidebar Backdrop -->
             <div id="sidebarBackdrop" class="fixed inset-0 z-40 hidden bg-slate-900/40 backdrop-blur-sm lg:hidden transition-opacity"></div>
 
             <!-- Main Floating Rounded Container -->
-            <div class="w-full max-w-[1580px] bg-white/95 backdrop-blur-md rounded-[28px] sm:rounded-[36px] shadow-[0_20px_50px_rgba(79,70,229,0.08)] border border-white ring-1 ring-slate-900/5 overflow-hidden flex flex-col lg:flex-row min-h-[92vh]">
+            <div class="w-full max-w-[1580px] bg-white/95 backdrop-blur-md rounded-[28px] sm:rounded-[36px] shadow-[0_20px_50px_rgba(79,70,229,0.08)] border border-white ring-1 ring-slate-900/5 flex flex-col lg:flex-row min-h-[92vh] relative">
                 
-                <!-- Left Vertical Icon Dock Sidebar -->
-                <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 lg:w-20 -translate-x-full lg:translate-x-0 flex-col justify-between border-r border-slate-100 bg-white/95 lg:bg-slate-50/60 p-4 transition-transform duration-300 ease-in-out lg:static lg:z-auto">
-                    <!-- Top section: Avatar / Brand -->
+                <!-- Left Vertical Icon Dock Sidebar (Full-height column with sticky floating dock) -->
+                <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 lg:w-20 -translate-x-full lg:translate-x-0 flex-col border-r border-slate-100 bg-white/95 lg:bg-slate-50/60 p-4 lg:p-2.5 transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:rounded-l-[28px] sm:lg:rounded-l-[36px]">
+                    <!-- Floating Dock: Follows page scroll dynamically on desktop -->
+                    <div id="sidebarFloatingDock" class="w-full flex-1 flex flex-col justify-between items-center lg:sticky lg:top-6 lg:self-start lg:h-[calc(100vh-3rem)] lg:max-h-[640px] px-1 py-1">
+                        <!-- Top section: Avatar / Brand -->
                     <div class="flex flex-col items-center">
                         <div class="flex items-center justify-between w-full lg:justify-center">
                             <a href="{{ route('dashboard') }}" class="group relative flex items-center justify-center" title="Dashboard">
@@ -175,12 +191,13 @@
                             </button>
                         </form>
                     </div>
+                    </div>
                 </aside>
 
                 <!-- Right Main Content Area -->
-                <div class="flex-1 flex flex-col min-w-0 bg-white">
-                    <!-- Top Modern Header Bar -->
-                    <header class="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-slate-100">
+                <div class="flex-1 flex flex-col min-w-0 bg-white rounded-r-[28px] sm:rounded-r-[36px]">
+                    <!-- Top Modern Header Bar (Sticky at top of content area) -->
+                    <header class="sticky top-0 z-20 flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-slate-100 bg-white/95 backdrop-blur-md rounded-tr-[28px] sm:rounded-tr-[36px]">
                         <!-- Left: Search Box (exact match to screenshot) -->
                         <div class="flex items-center gap-3 flex-1 max-w-md">
                             <!-- Mobile menu trigger -->
@@ -369,7 +386,7 @@
                     </header>
 
                     <!-- Page Body Content -->
-                    <main class="flex-1 p-5 sm:p-7 lg:p-8 overflow-y-auto">
+                    <main class="flex-1 p-5 sm:p-7 lg:p-8">
                         @if(session('success'))
                             <div class="mb-6 flex items-center gap-3 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-emerald-800 px-5 py-3.5 text-sm font-medium shadow-sm">
                                 <svg class="w-5 h-5 text-emerald-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -480,6 +497,54 @@
                     closeAllHeaderDropdowns();
                 }
             });
+
+            // Sticky Floating Sidebar Dock Scroll Motion
+            const floatingDock = document.getElementById('sidebarFloatingDock');
+            if (floatingDock) {
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+                let currentOffset = 0;
+                let targetOffset = 0;
+
+                const updateFloatingDock = function () {
+                    if (window.innerWidth >= 1024) {
+                        const scrollY = window.scrollY;
+                        const delta = scrollY - lastScrollY;
+
+                        // Subtle inertial movement during scroll: responds dynamically to scroll direction
+                        targetOffset = Math.max(-8, Math.min(8, delta * 0.25));
+                        currentOffset += (targetOffset - currentOffset) * 0.2;
+
+                        if (scrollY > 30) {
+                            floatingDock.classList.add('is-floating');
+                        } else {
+                            floatingDock.classList.remove('is-floating');
+                        }
+
+                        floatingDock.style.transform = `translateY(${currentOffset.toFixed(2)}px)`;
+
+                        targetOffset *= 0.8;
+                        if (Math.abs(currentOffset) > 0.05 || Math.abs(targetOffset) > 0.05) {
+                            requestAnimationFrame(updateFloatingDock);
+                            return;
+                        } else {
+                            floatingDock.style.transform = 'translateY(0px)';
+                        }
+                    } else {
+                        floatingDock.style.transform = 'none';
+                        floatingDock.classList.remove('is-floating');
+                    }
+                    ticking = false;
+                    lastScrollY = window.scrollY;
+                };
+
+                window.addEventListener('scroll', function () {
+                    if (!ticking) {
+                        requestAnimationFrame(updateFloatingDock);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
         });
     </script>
 </body>
