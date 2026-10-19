@@ -19,7 +19,10 @@ class POSFeatureTest extends TestCase
         $response = $this->get('/login');
 
         $response->assertStatus(200)
-            ->assertSee('Login Admin');
+            ->assertSee('Login Admin')
+            ->assertSee('Login Cepat Akun Demo')
+            ->assertSee('Admin Demo')
+            ->assertSee('Kasir Demo');
     }
 
     public function test_admin_can_login(): void
@@ -50,6 +53,71 @@ class POSFeatureTest extends TestCase
 
         $response->assertRedirect('/');
         $this->assertAuthenticatedAs(User::where('email', 'admin@example.com')->first());
+    }
+
+    public function test_seeded_kasir_account_can_login(): void
+    {
+        $this->seed();
+
+        $response = $this->post('/login', [
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect('/pos');
+        $this->assertAuthenticatedAs(User::where('email', 'test@example.com')->first());
+    }
+
+    public function test_kasir_cannot_access_admin_dashboard_and_is_redirected_to_pos(): void
+    {
+        $kasir = User::factory()->kasir()->create();
+
+        $response = $this->actingAs($kasir)->get('/');
+
+        $response->assertRedirect('/pos');
+        $response->assertSessionHas('error', 'Akses ditolak. Fitur ini hanya dapat diakses oleh Administrator.');
+    }
+
+    public function test_kasir_cannot_access_product_management(): void
+    {
+        $kasir = User::factory()->kasir()->create();
+
+        $response = $this->actingAs($kasir)->get('/products');
+
+        $response->assertRedirect('/pos');
+        $response->assertSessionHas('error', 'Akses ditolak. Fitur ini hanya dapat diakses oleh Administrator.');
+    }
+
+    public function test_kasir_cannot_access_reports(): void
+    {
+        $kasir = User::factory()->kasir()->create();
+
+        $response = $this->actingAs($kasir)->get('/reports');
+
+        $response->assertRedirect('/pos');
+        $response->assertSessionHas('error', 'Akses ditolak. Fitur ini hanya dapat diakses oleh Administrator.');
+    }
+
+    public function test_kasir_can_access_pos_and_transactions(): void
+    {
+        $kasir = User::factory()->kasir()->create();
+
+        $responsePos = $this->actingAs($kasir)->get('/pos');
+        $responsePos->assertStatus(200);
+
+        $responseTx = $this->actingAs($kasir)->get('/transactions');
+        $responseTx->assertStatus(200);
+    }
+
+    public function test_admin_can_access_all_routes(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)->get('/')->assertStatus(200);
+        $this->actingAs($admin)->get('/products')->assertStatus(200);
+        $this->actingAs($admin)->get('/reports')->assertStatus(200);
+        $this->actingAs($admin)->get('/pos')->assertStatus(200);
+        $this->actingAs($admin)->get('/transactions')->assertStatus(200);
     }
 
     public function test_admin_can_create_product(): void
@@ -129,6 +197,49 @@ class POSFeatureTest extends TestCase
 
         $response->assertRedirect('/products');
         $this->assertDatabaseHas('products', ['id' => $product->id, 'stock' => 8]);
+    }
+
+    public function test_admin_can_delete_product_with_traditional_request(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::create([
+            'name' => 'Kopi Dihapus',
+            'sku' => 'DEL-001',
+            'stock' => 5,
+            'buy_price' => 5000,
+            'sell_price' => 15000,
+        ]);
+
+        $response = $this->actingAs($user)->delete(route('products.destroy', $product));
+
+        $response->assertRedirect('/products');
+        $response->assertSessionHas('success', 'Produk berhasil dihapus.');
+        $this->assertDatabaseMissing('products', ['id' => $product->id]);
+    }
+
+    public function test_admin_can_delete_product_via_ajax_without_page_reload(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::create([
+            'name' => 'Kopi AJAX',
+            'sku' => 'AJAX-001',
+            'stock' => 8,
+            'buy_price' => 4000,
+            'sell_price' => 10000,
+        ]);
+
+        $response = $this->actingAs($user)->withHeaders([
+            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
+        ])->delete(route('products.destroy', $product));
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Produk berhasil dihapus.',
+            ]);
+
+        $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
 
     public function test_adding_product_with_ajax_returns_updated_cart_panel(): void
@@ -633,5 +744,185 @@ class POSFeatureTest extends TestCase
         $responseAll = $this->actingAs($user)->get('/?period=semua');
         $responseAll->assertStatus(200)
             ->assertSee('Rp 55.500');
+    }
+
+    public function test_product_can_be_stored_with_base64_image_directly_into_database(): void
+    {
+        $user = User::factory()->create();
+        $base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=';
+
+        $response = $this->actingAs($user)->post('/products', [
+            'name' => 'Kopi Robusta Lampung',
+            'sku' => 'KRL-001',
+            'category' => 'Minuman',
+            'stock' => 15,
+            'buy_price' => 8000,
+            'sell_price' => 15000,
+            'description' => 'Kopi asli Lampung',
+            'image_base64' => $base64Image,
+        ]);
+
+        $response->assertRedirect('/products');
+        $this->assertDatabaseHas('products', [
+            'name' => 'Kopi Robusta Lampung',
+            'sku' => 'KRL-001',
+            'image' => $base64Image,
+        ]);
+
+        $product = Product::where('sku', 'KRL-001')->first();
+        $this->assertEquals($base64Image, $product->image_url);
+    }
+
+    public function test_product_can_be_stored_with_standard_file_upload(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('tea.jpg');
+
+        $response = $this->actingAs($user)->post('/products', [
+            'name' => 'Teh Tarik Aceh',
+            'sku' => 'TTA-001',
+            'category' => 'Minuman',
+            'stock' => 20,
+            'buy_price' => 4000,
+            'sell_price' => 12000,
+            'image' => $file,
+        ]);
+
+        $response->assertRedirect('/products');
+        $product = Product::where('sku', 'TTA-001')->first();
+        $this->assertNotNull($product);
+        $this->assertStringStartsWith('products/', $product->image);
+        Storage::disk('public')->assertExists($product->image);
+    }
+
+    public function test_product_can_be_updated_with_base64_image(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::create([
+            'name' => 'Kopi Tubruk',
+            'sku' => 'KTB-001',
+            'category' => 'Minuman',
+            'stock' => 5,
+            'buy_price' => 3000,
+            'sell_price' => 8000,
+        ]);
+
+        $newBase64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=';
+
+        $response = $this->actingAs($user)->put('/products/'.$product->id, [
+            'name' => 'Kopi Tubruk Manis',
+            'sku' => 'KTB-001',
+            'category' => 'Minuman',
+            'stock' => 10,
+            'buy_price' => 3500,
+            'sell_price' => 9000,
+            'image_base64' => $newBase64,
+        ]);
+
+        $response->assertRedirect('/products');
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'name' => 'Kopi Tubruk Manis',
+            'image' => $newBase64,
+        ]);
+    }
+
+    public function test_admin_can_view_cashiers_page(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $cashier = User::factory()->kasir()->create(['name' => 'Budi Kasir']);
+
+        $response = $this->actingAs($admin)->get('/cashiers');
+
+        $response->assertStatus(200)
+            ->assertSee('Kelola Akun Kasir')
+            ->assertSee('Budi Kasir');
+    }
+
+    public function test_kasir_cannot_access_cashiers_page(): void
+    {
+        $cashier = User::factory()->kasir()->create();
+
+        $response = $this->actingAs($cashier)->get('/cashiers');
+
+        $response->assertRedirect('/pos');
+        $response->assertSessionHas('error', 'Akses ditolak. Fitur ini hanya dapat diakses oleh Administrator.');
+    }
+
+    public function test_admin_can_create_new_cashier(): void
+    {
+        $admin = User::factory()->admin()->create();
+
+        $response = $this->actingAs($admin)->post('/cashiers', [
+            'name' => 'Siti Rahma',
+            'email' => 'siti@warkop.id',
+            'role' => 'kasir',
+            'password' => 'kasir12345',
+            'password_confirmation' => 'kasir12345',
+        ]);
+
+        $response->assertRedirect('/cashiers');
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Siti Rahma',
+            'email' => 'siti@warkop.id',
+            'role' => 'kasir',
+        ]);
+    }
+
+    public function test_admin_can_update_cashier_details(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $cashier = User::factory()->kasir()->create([
+            'name' => 'Old Name',
+            'email' => 'old@warkop.id',
+        ]);
+
+        $response = $this->actingAs($admin)->put('/cashiers/'.$cashier->id, [
+            'name' => 'New Name',
+            'email' => 'new@warkop.id',
+            'role' => 'kasir',
+            'password' => '',
+            'password_confirmation' => '',
+        ]);
+
+        $response->assertRedirect('/cashiers');
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $cashier->id,
+            'name' => 'New Name',
+            'email' => 'new@warkop.id',
+        ]);
+    }
+
+    public function test_admin_can_delete_cashier(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $cashier = User::factory()->kasir()->create([
+            'name' => 'Kasir Hapus',
+            'email' => 'hapus@warkop.id',
+        ]);
+
+        $response = $this->actingAs($admin)->delete('/cashiers/'.$cashier->id);
+
+        $response->assertRedirect('/cashiers');
+        $response->assertSessionHas('success');
+        $this->assertDatabaseMissing('users', ['id' => $cashier->id]);
+    }
+
+    public function test_admin_cannot_delete_their_own_account(): void
+    {
+        $admin = User::factory()->admin()->create([
+            'email' => 'admin_super@warkop.id',
+        ]);
+
+        $response = $this->actingAs($admin)->delete('/cashiers/'.$admin->id);
+
+        $response->assertRedirect('/cashiers');
+        $response->assertSessionHas('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        $this->assertDatabaseHas('users', ['id' => $admin->id]);
     }
 }

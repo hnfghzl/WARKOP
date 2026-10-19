@@ -11,30 +11,30 @@
 @section('title', 'Daftar Produk')
 
 @section('content')
-    <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div class="mb-6 sm:mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-            <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">Inventaris</p>
-            <h1 class="text-4xl font-bold tracking-tight text-slate-900">Daftar Produk</h1>
-            <p class="mt-2 max-w-xl text-slate-500">Kelola katalog, stok, harga, dan gambar produk dari satu tempat.</p>
+            <p class="mb-1 text-xs sm:text-sm font-semibold uppercase tracking-wider text-blue-600">Inventaris</p>
+            <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">Daftar Produk</h1>
+            <p class="mt-1 sm:mt-2 max-w-xl text-xs sm:text-sm text-slate-500">Kelola katalog, stok, harga, dan gambar produk dari satu tempat.</p>
         </div>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
             @if($editingProduct)
-                <a href="{{ route('products.index', ['create' => 1]) }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <a href="{{ route('products.index', ['create' => 1]) }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
                     <span>Tambah Produk Baru</span>
                 </a>
             @else
-                <button type="button" id="btnToggleProductForm" data-action="toggle-product-form" class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" id="btnToggleProductFormIcon" viewBox="0 0 20 20" fill="currentColor">
+                <button type="button" id="btnToggleProductForm" data-action="toggle-product-form" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 transition-transform duration-200" id="btnToggleProductFormIcon" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
                     <span id="btnToggleProductFormText">{{ $shouldShowForm ? 'Tutup Form' : 'Tambah Produk' }}</span>
                 </button>
             @endif
-            <a href="{{ route('pos.index') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="{{ route('pos.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <span>Buka POS</span>
@@ -43,9 +43,9 @@
     </div>
 
     <div class="mb-8 grid gap-4 sm:grid-cols-3">
-        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Total Produk</p><p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalProducts }}</p><p class="mt-1 text-xs text-slate-400">Produk terdaftar</p></div>
-        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Total Stok</p><p class="mt-2 text-3xl font-bold text-slate-900">{{ number_format($totalStock, 0, ',', '.') }}</p><p class="mt-1 text-xs text-slate-400">Unit tersedia</p></div>
-        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Perlu Restok</p><p class="mt-2 text-3xl font-bold {{ $lowStockProducts > 0 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $lowStockProducts }}</p><p class="mt-1 text-xs text-slate-400">Stok 5 atau kurang</p></div>
+        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Total Produk</p><p id="statTotalProducts" class="mt-2 text-3xl font-bold text-slate-900">{{ $totalProducts }}</p><p class="mt-1 text-xs text-slate-400">Produk terdaftar</p></div>
+        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Total Stok</p><p id="statTotalStock" class="mt-2 text-3xl font-bold text-slate-900">{{ number_format($totalStock, 0, ',', '.') }}</p><p class="mt-1 text-xs text-slate-400">Unit tersedia</p></div>
+        <div class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Perlu Restok</p><p id="statLowStock" class="mt-2 text-3xl font-bold {{ $lowStockProducts > 0 ? 'text-amber-600' : 'text-emerald-600' }}">{{ $lowStockProducts }}</p><p class="mt-1 text-xs text-slate-400">Stok 5 atau kurang</p></div>
     </div>
 
     <div id="productFormContainer" data-is-editing="{{ $editingProduct ? 'true' : 'false' }}" class="{{ $shouldShowForm ? '' : 'hidden' }} mb-8 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300">
@@ -87,7 +87,7 @@
             </div>
         @endif
 
-        <form id="productForm" action="{{ $editingProduct ? route('products.update', $editingProduct) : route('products.store') }}" method="POST" enctype="multipart/form-data" class="grid gap-6 p-6 md:grid-cols-2 xl:grid-cols-3">
+        <form id="productForm" action="{{ $editingProduct ? route('products.update', $editingProduct) : route('products.store') }}" method="POST" enctype="multipart/form-data" class="grid gap-4 sm:gap-6 p-4 sm:p-6 md:grid-cols-2 xl:grid-cols-3">
             @csrf
             @if($editingProduct)
                 @method('PUT')
@@ -142,30 +142,35 @@
                 <label for="image" class="mb-2 block text-sm font-semibold text-slate-700">Foto Produk</label>
                 <label for="image" class="flex min-h-28 cursor-pointer items-center gap-4 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 px-5 py-4 transition hover:border-blue-400 hover:bg-blue-50">
                     @if($editingProduct?->image)
-                        <img id="imagePreview" src="{{ asset('storage/' . $editingProduct->image) }}" alt="{{ $editingProduct->name }}" class="h-20 w-20 rounded-xl object-cover">
+                        <img id="imagePreview" src="{{ $editingProduct->image_url }}" alt="{{ $editingProduct->name }}" class="h-20 w-20 rounded-xl object-cover">
                     @else
                         <img id="imagePreview" src="" alt="Preview gambar" class="hidden h-20 w-20 rounded-xl object-cover">
                         <span id="imagePlaceholder" class="flex h-20 w-20 items-center justify-center rounded-xl bg-blue-100 text-3xl text-blue-600">+</span>
                     @endif
-                    <span><span class="block text-sm font-semibold text-slate-700">Upload gambar produk</span><span class="mt-1 block text-xs text-slate-400">JPG, PNG, atau WEBP. Maksimal 10 MB.</span></span>
+                    <span>
+                        <span class="block text-sm font-semibold text-slate-700">Upload gambar produk</span>
+                        <span class="mt-1 block text-xs text-slate-400">JPG, PNG, atau WEBP. Tersimpan langsung ke database.</span>
+                    </span>
                 </label>
-                <input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only">
+                <!-- File picker without name attribute so it never triggers PHP multipart upload_tmp_dir errors -->
+                <input id="image" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only">
+                <input type="hidden" name="image_base64" id="imageBase64" value="{{ old('image_base64') }}">
                 @if($editingProduct?->image)
                     <p class="mt-2 text-xs text-slate-400">Pilih gambar baru untuk mengganti foto saat ini.</p>
                 @endif
             </div>
 
-            <div class="md:col-span-2 xl:col-span-3 flex items-center justify-end gap-3 pt-2 border-t border-slate-100">
+            <div class="md:col-span-2 xl:col-span-3 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-100">
                 @if($editingProduct)
-                    <a href="{{ route('products.index') }}" class="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+                    <a href="{{ route('products.index') }}" class="rounded-xl border border-slate-200 px-5 py-2.5 text-center text-xs sm:text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
                         Batal
                     </a>
                 @else
-                    <button type="button" data-action="close-product-form" class="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
+                    <button type="button" data-action="close-product-form" class="rounded-xl border border-slate-200 px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 transition hover:bg-slate-50">
                         Batal
                     </button>
                 @endif
-                <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
+                <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-sm shadow-blue-500/20 transition hover:bg-blue-700 active:scale-95">
                     {{ $editingProduct ? 'Update Produk' : 'Simpan Produk' }}
                 </button>
             </div>
@@ -185,7 +190,7 @@
             </div>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-slate-200">
+            <table class="min-w-[760px] w-full divide-y divide-slate-200">
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500">Gambar</th>
@@ -197,12 +202,12 @@
                         <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200">
-                    @forelse($products as $product)
-                        <tr class="transition hover:bg-slate-50">
+                <tbody id="productsTableBody" class="divide-y divide-slate-200">
+                    @foreach($products as $product)
+                        <tr id="product-row-{{ $product->id }}" data-product-id="{{ $product->id }}" data-stock="{{ $product->stock }}" class="transition-all duration-300 hover:bg-slate-50">
                             <td class="px-6 py-4">
                                 @if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="h-14 w-14 rounded-xl object-cover ring-1 ring-slate-200">
+                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-14 w-14 rounded-xl object-cover ring-1 ring-slate-200">
                                 @else
                                     <div class="flex h-14 w-14 items-center justify-center rounded-lg bg-slate-100 text-xs text-slate-400">Tanpa gambar</div>
                                 @endif
@@ -221,7 +226,7 @@
                                         <span>Edit</span>
                                     </a>
 
-                                    <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?')" class="inline-block">
+                                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline-block delete-product-form" data-product-id="{{ $product->id }}" data-product-name="{{ $product->name }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="inline-flex items-center gap-1 rounded-xl bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 active:scale-95" title="Hapus Produk">
@@ -245,26 +250,29 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="px-6 py-12 text-center text-sm text-slate-500">
-                                <div class="flex flex-col items-center justify-center py-4">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-2xl text-slate-400 mb-3">
-                                        📦
-                                    </div>
-                                    <p class="font-semibold text-slate-700 text-base">Belum ada produk.</p>
-                                    <p class="text-xs text-slate-400 mt-1 mb-4">Mulai dengan menambahkan produk pertama ke dalam katalog.</p>
-                                    <button type="button" data-action="open-product-form" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
-                                        <span>+</span> Tambah Produk Pertama
-                                    </button>
+                    @endforeach
+
+                    <tr id="emptyProductRow" class="{{ $products->isEmpty() ? '' : 'hidden' }}">
+                        <td colspan="7" class="px-6 py-12 text-center text-sm text-slate-500">
+                            <div class="flex flex-col items-center justify-center py-4">
+                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-2xl text-slate-400 mb-3">
+                                    📦
                                 </div>
-                            </td>
-                        </tr>
-                    @endforelse
+                                <p class="font-semibold text-slate-700 text-base">Belum ada produk.</p>
+                                <p class="text-xs text-slate-400 mt-1 mb-4">Mulai dengan menambahkan produk pertama ke dalam katalog.</p>
+                                <button type="button" data-action="open-product-form" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
+                                    <span>+</span> Tambah Produk Pertama
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Floating Toast Notification Container -->
+    <div id="productToastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     @vite('resources/js/products.js')
 @endsection

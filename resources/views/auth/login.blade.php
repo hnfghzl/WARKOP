@@ -3,127 +3,138 @@
 @section('title', 'Login Admin - Kasir')
 
 @section('content')
-<div class="relative w-full max-w-5xl my-4 sm:my-8 px-2">
-    <!-- Decorative Dot Grid in Top Right (Matches Reference Image) -->
-    <div class="hidden sm:block absolute -top-8 -right-8 w-32 h-32 pointer-events-none opacity-30">
-        <svg width="128" height="128" fill="none">
+<div class="relative w-full max-w-4xl my-auto py-1 sm:py-3 px-1 sm:px-2">
+    <!-- Decorative Dot Grid in Top Right -->
+    <div class="hidden sm:block absolute -top-6 -right-6 w-24 h-24 pointer-events-none opacity-25">
+        <svg width="96" height="96" fill="none">
             <pattern id="dotGrid" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
                 <circle cx="3" cy="3" r="2" fill="#FFFFFF"/>
             </pattern>
-            <rect width="128" height="128" fill="url(#dotGrid)"/>
+            <rect width="96" height="96" fill="url(#dotGrid)"/>
         </svg>
     </div>
 
     <!-- Decorative Dot Grid in Bottom Left -->
-    <div class="hidden sm:block absolute -bottom-8 -left-8 w-32 h-32 pointer-events-none opacity-30">
-        <svg width="128" height="128" fill="none">
-            <rect width="128" height="128" fill="url(#dotGrid)"/>
+    <div class="hidden sm:block absolute -bottom-6 -left-6 w-24 h-24 pointer-events-none opacity-25">
+        <svg width="96" height="96" fill="none">
+            <rect width="96" height="96" fill="url(#dotGrid)"/>
         </svg>
     </div>
 
-    <!-- Main Split-Screen Card Container -->
-    <div class="w-full bg-white rounded-[32px] sm:rounded-[36px] shadow-[0_25px_70px_rgba(20,20,70,0.3)] border border-white/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[580px] relative z-10">
+    <!-- Main Split-Screen Card Container (Compact height) -->
+    <div class="w-full bg-white rounded-2xl sm:rounded-[32px] shadow-[0_20px_60px_rgba(20,20,70,0.25)] border border-white/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-0 relative z-10">
         
-        <!-- Left Column: Illustration & Brand (~50% width) -->
-        <div class="lg:col-span-6 bg-[#F8FAFF] border-b lg:border-b-0 lg:border-r border-slate-100 p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-            <!-- Brand at Top Left (Matches Reference Image Logo) -->
-            <div class="flex items-center gap-3 relative z-10">
-                <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-500/30">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <!-- Left Column: Illustration & Brand (Desktop only) -->
+        <div class="hidden lg:flex lg:col-span-6 bg-[#F8FAFF] border-r border-slate-100 p-6 sm:p-8 flex-col justify-between relative overflow-hidden">
+            <!-- Brand at Top Left -->
+            <div class="flex items-center gap-2.5 relative z-10">
+                <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-500/25">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                         <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
                         <circle cx="12" cy="12" r="3"/>
                     </svg>
                 </div>
                 <div>
-                    <span class="text-base font-extrabold tracking-widest text-indigo-900 uppercase">WARKOP</span>
-                    <span class="text-[10px] text-slate-400 font-bold block -mt-1 tracking-wider uppercase">Sistem Kasir</span>
+                    <span class="text-sm font-extrabold tracking-widest text-indigo-900 uppercase">WARKOP</span>
+                    <span class="text-[9px] text-slate-400 font-bold block -mt-1 tracking-wider uppercase">Sistem Kasir</span>
                 </div>
             </div>
 
             <!-- Center Isometric 3D Illustration -->
-            <div class="my-6 flex items-center justify-center relative z-10">
-                <div class="w-full max-w-[360px] transition-transform duration-500 hover:scale-105">
+            <div class="my-3 flex items-center justify-center relative z-10">
+                <div class="w-full max-w-[260px] transition-transform duration-500 hover:scale-105">
                     <img src="{{ asset('images/login-illustration.svg') }}" 
                          alt="Ilustrasi Keamanan Kasir" 
-                         class="w-full h-auto drop-shadow-md">
+                         class="w-full h-auto drop-shadow-sm">
                 </div>
             </div>
 
             <!-- Bottom Note -->
-            <div class="flex items-center justify-between text-xs text-slate-400 relative z-10 pt-2 border-t border-slate-200/50">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 relative z-10 pt-2 border-t border-slate-200/50">
                 <span class="flex items-center gap-1.5 font-medium text-slate-500">
-                    <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    Koneksi Enkripsi Terproteksi
+                    <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    Enkripsi Terproteksi
                 </span>
-                <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">v1.0 POS</span>
+                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">v1.0 POS</span>
             </div>
         </div>
 
-        <!-- Right Column: Login Form (~50% width) -->
-        <div class="lg:col-span-6 bg-white p-8 sm:p-12 flex flex-col justify-between">
-            <!-- Top Right Info (Matches "Already have an account? SIGN IN") -->
-            <div class="flex items-center justify-end text-xs font-semibold text-slate-500 gap-2 mb-6">
-                <span>Mode Masuk:</span>
-                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full font-bold uppercase tracking-wider text-[10px] border border-slate-200">
+        <!-- Right Column: Login Form (Compact padding, no excessive vertical length) -->
+        <div class="lg:col-span-6 bg-white p-4 sm:p-7 lg:p-8 flex flex-col justify-between">
+            <!-- Mobile Brand & Mode Header (Compact single row) -->
+            <div class="lg:hidden flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-xs">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-xs font-extrabold tracking-widest text-indigo-900 uppercase">WARKOP POS</span>
+                    </div>
+                </div>
+                <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-bold uppercase tracking-wider text-[9px] border border-slate-200">
+                    Login Admin
+                </span>
+            </div>
+
+            <!-- Desktop Top Right Info -->
+            <div class="hidden lg:flex items-center justify-end text-xs font-semibold text-slate-500 gap-1.5 mb-2">
+                <span>Mode:</span>
+                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 rounded-full font-bold uppercase tracking-wider text-[10px] border border-slate-200">
                     Login Admin
                 </span>
             </div>
 
             <!-- Welcome Title -->
-            <div class="mb-7">
-                <h1 class="text-3xl sm:text-[34px] font-extrabold text-slate-900 tracking-tight leading-tight">
-                    Welcome Rek
+            <div class="mb-3 sm:mb-4">
+                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    Welcome Rek 👋
                 </h1>
-                <p class="text-sm text-slate-400 font-medium mt-1.5">
+                <p class="text-xs sm:text-sm text-slate-400 font-medium mt-0.5">
                     Masuk ke akun kasir & admin toko Anda.
                 </p>
             </div>
 
-            <!-- Form -->
-            <form method="POST" action="{{ route('login.post') }}" class="space-y-5">
+            <!-- Form (Compact spacing) -->
+            <form id="loginForm" method="POST" action="{{ route('login.post') }}" class="space-y-3 sm:space-y-3.5">
                 @csrf
 
                 @if ($errors->any())
-                    <div class="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-700 flex items-start gap-2.5 shadow-sm">
-                        <svg class="w-4 h-4 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="rounded-xl border border-red-200 bg-red-50 p-2.5 text-xs text-red-700 flex items-start gap-2 shadow-xs">
+                        <svg class="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         <div>
                             <p class="font-bold">Login gagal</p>
-                            <p class="mt-0.5">Email atau password yang Anda masukkan salah.</p>
+                            <p class="text-[11px] mt-0.5">Email atau password yang Anda masukkan salah.</p>
                         </div>
                     </div>
                 @endif
 
                 <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-xs font-bold text-slate-700 mb-1.5 tracking-wide">
+                    <label for="email" class="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1 tracking-wide">
                         Email
                     </label>
-                    <div class="relative">
-                        <input id="email"
-                               name="email"
-                               type="email"
-                               value="{{ old('email') }}"
-                               autocomplete="email"
-                               autofocus
-                               required
-                               placeholder="focus001@gmail.com"
-                               class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-800 placeholder:text-slate-300 outline-none transition focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/15 @error('email') border-red-400 @enderror">
-                    </div>
+                    <input id="email"
+                           name="email"
+                           type="email"
+                           value="{{ old('email') }}"
+                           autocomplete="email"
+                           autofocus
+                           required
+                           placeholder="admin@example.com"
+                           class="w-full rounded-xl sm:rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-300 outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/15 @error('email') border-red-400 @enderror">
                     @error('email')
-                        <p class="mt-1 text-xs text-red-600 font-medium">{{ $message }}</p>
+                        <p class="mt-0.5 text-[11px] text-red-600 font-medium">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Password Field -->
                 <div>
-                    <div class="flex items-center justify-between mb-1.5">
-                        <label for="password" class="block text-xs font-bold text-slate-700 tracking-wide">
-                            Password
-                        </label>
-                        <span class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold cursor-pointer" onclick="quickFill('admin@example.com', 'admin123')">
-                            Lupa password?
-                        </span>
-                    </div>
+                    <label for="password" class="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1 tracking-wide">
+                        Password
+                    </label>
                     <div class="relative">
                         <input id="password"
                                name="password"
@@ -131,13 +142,13 @@
                                autocomplete="current-password"
                                required
                                placeholder="8+ characters"
-                               class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 pr-12 text-sm text-slate-800 placeholder:text-slate-300 outline-none transition focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/15">
-                        <!-- Toggle Password Button with Eye SVG (Matches Reference Image) -->
+                               class="w-full rounded-xl sm:rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 pr-10 text-xs sm:text-sm text-slate-800 placeholder:text-slate-300 outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/15">
+                        <!-- Toggle Password Button with Eye SVG -->
                         <button type="button" 
                                 onclick="togglePasswordVisibility()" 
-                                class="absolute inset-y-0 right-0 flex items-center px-4 text-slate-400 hover:text-slate-600 transition" 
+                                class="absolute inset-y-0 right-0 flex items-center px-3 text-slate-400 hover:text-slate-600 transition" 
                                 aria-label="Tampilkan password">
-                            <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                             </svg>
@@ -145,37 +156,77 @@
                     </div>
                 </div>
 
-                <!-- Remember Me Checkbox -->
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-600">
-                        <input type="checkbox" name="remember" class="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                <!-- Remember Me & Forgot Password in One Compact Row -->
+                <div class="flex items-center justify-between pt-0.5">
+                    <label class="flex items-center gap-1.5 cursor-pointer text-[11px] sm:text-xs font-semibold text-slate-600">
+                        <input type="checkbox" name="remember" class="w-3.5 h-3.5 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
                         <span>Ingat saya</span>
                     </label>
+                    <span class="text-[11px] sm:text-xs text-indigo-600 hover:text-indigo-800 font-semibold cursor-pointer" onclick="quickFill('admin@example.com', 'password')">
+                        Lupa password?
+                    </span>
                 </div>
 
-                <!-- Submit Button (Matches Purple Pill Button in Reference Image) -->
-                <div class="pt-2">
-                    <button type="submit" 
-                            class="w-full sm:w-auto px-12 py-3.5 bg-gradient-to-r from-[#5B4DF6] to-[#6C5CE7] hover:from-[#4E3FE6] hover:to-[#5E4DE0] text-white font-bold text-sm rounded-2xl shadow-lg shadow-indigo-500/35 hover:shadow-xl hover:shadow-indigo-500/45 transition-all duration-200 active:scale-[0.98]">
+                <!-- Submit Button -->
+                <div class="pt-1">
+                    <button type="submit" id="btnSubmitLogin"
+                            class="w-full sm:w-auto px-10 py-2.5 sm:py-3 bg-gradient-to-r from-[#5B4DF6] to-[#6C5CE7] hover:from-[#4E3FE6] hover:to-[#5E4DE0] text-white font-bold text-xs sm:text-sm rounded-xl sm:rounded-2xl shadow-md shadow-indigo-500/30 transition-all duration-200 active:scale-[0.98]">
                         Login
                     </button>
                 </div>
             </form>
 
-            <!-- Bottom Quick Account Fill (Matches Reference Image Social/Quick Row) -->
-            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 font-medium">
-                <span>Login cepat akun demo:</span>
-                <div class="flex items-center gap-2">
-                    <button type="button" 
-                            onclick="quickFill('admin@example.com', 'admin123')" 
-                            class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 font-bold transition flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-indigo-600"></span> Admin
-                    </button>
-                    <button type="button" 
-                            onclick="quickFill('test@example.com', 'password')" 
-                            class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 font-bold transition flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Kasir
-                    </button>
+            <!-- Bottom Quick Account Fill / 1-Click Instant Login (Compact 2-columns) -->
+            <div class="mt-4 pt-3 sm:pt-4 border-t border-slate-100">
+                <div class="rounded-xl sm:rounded-2xl border border-indigo-100/90 bg-gradient-to-r from-indigo-50/50 via-slate-50/70 to-blue-50/50 p-2.5 sm:p-3 shadow-xs">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[11px] sm:text-xs font-bold text-slate-800 flex items-center gap-1">
+                            Login Cepat Akun Demo:
+                        </span>
+                        <span class="text-[9px] sm:text-[10px] font-bold text-indigo-700 bg-white border border-indigo-100 px-2 py-0.5 rounded-full shadow-xs">
+                            1-Klik
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <!-- Admin Demo Card -->
+                        <button type="button" 
+                                onclick="quickLogin('admin@example.com', 'password', this)" 
+                                class="group flex flex-col items-start p-2 sm:p-2.5 rounded-lg bg-white border border-slate-200/90 hover:border-indigo-400 hover:shadow-xs transition-all active:scale-[0.98] text-left">
+                            <div class="flex items-center justify-between w-full">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-800 group-hover:text-indigo-600 transition flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span> Admin
+                                </span>
+                                <span class="text-[10px] text-indigo-600 font-bold group-hover:translate-x-0.5 transition-transform">
+                                    →
+                                </span>
+                            </div>
+                            <span class="mt-0.5 text-[9px] sm:text-[10px] text-slate-400 font-mono truncate w-full">
+                                admin@example.com
+                            </span>
+                        </button>
+
+                        <!-- Kasir Demo Card -->
+                        <button type="button" 
+                                onclick="quickLogin('test@example.com', 'password', this)" 
+                                class="group flex flex-col items-start p-2 sm:p-2.5 rounded-lg bg-white border border-slate-200/90 hover:border-emerald-400 hover:shadow-xs transition-all active:scale-[0.98] text-left">
+                            <div class="flex items-center justify-between w-full">
+                                <span class="text-[11px] sm:text-xs font-bold text-slate-800 group-hover:text-emerald-600 transition flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Kasir
+                                </span>
+                                <span class="text-[10px] text-emerald-600 font-bold group-hover:translate-x-0.5 transition-transform">
+                                    →
+                                </span>
+                            </div>
+                            <span class="mt-0.5 text-[9px] sm:text-[10px] text-slate-400 font-mono truncate w-full">
+                                test@example.com
+                            </span>
+                        </button>
+                    </div>
+
+                    <p class="mt-1.5 text-[10px] text-slate-400 text-center">
+                        Klik akun di atas untuk langsung masuk tanpa mengetik.
+                    </p>
                 </div>
             </div>
         </div>
@@ -196,8 +247,37 @@
     }
 
     function quickFill(email, password) {
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = password;
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        if (emailInput && passwordInput) {
+            emailInput.value = email;
+            passwordInput.value = password;
+        }
+    }
+
+    function quickLogin(email, password, btnElement) {
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const form = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('btnSubmitLogin');
+
+        if (emailInput && passwordInput && form) {
+            emailInput.value = email;
+            passwordInput.value = password;
+
+            if (btnElement) {
+                btnElement.classList.add('opacity-75', 'pointer-events-none');
+            }
+
+            if (submitBtn) {
+                submitBtn.textContent = 'Memproses...';
+                submitBtn.disabled = true;
+            }
+
+            setTimeout(() => {
+                form.submit();
+            }, 100);
+        }
     }
 </script>
 @endsection

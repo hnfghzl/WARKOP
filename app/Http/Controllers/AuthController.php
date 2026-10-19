@@ -22,6 +22,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            if (Auth::user()->isKasir()) {
+                return redirect()->intended(route('pos.index'));
+            }
+
             return redirect()->intended('/');
         }
 

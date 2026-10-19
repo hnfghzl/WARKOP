@@ -7,7 +7,8 @@ function initializePaymentPreview() {
         return;
     }
 
-    const totalAmount = Number(document.getElementById('posTotalAmount').dataset.total || 0);
+    const totalEl = document.getElementById('posTotalAmount');
+    const totalAmount = Number((totalEl && totalEl.dataset.total) || 0);
 
     function formatRupiah(value) {
         return new Intl.NumberFormat('id-ID', {
@@ -29,8 +30,36 @@ function initializePaymentPreview() {
     updateChange();
 }
 
+function syncMobileCartBar() {
+    const cartPanel = document.getElementById('cartPanel');
+    const stickyBar = document.getElementById('mobileCartStickyBar');
+    const badge = document.getElementById('mobileCartBadge');
+    const totalEl = document.getElementById('mobileCartTotal');
+
+    if (!cartPanel || !stickyBar) {
+        return;
+    }
+
+    const count = parseInt(cartPanel.dataset.cartCount || '0', 10);
+    const total = cartPanel.dataset.cartTotal || '0';
+
+    if (badge) {
+        badge.textContent = count;
+    }
+    if (totalEl) {
+        totalEl.textContent = 'Rp ' + total;
+    }
+
+    if (count > 0) {
+        stickyBar.classList.remove('hidden');
+    } else {
+        stickyBar.classList.add('hidden');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     initializePaymentPreview();
+    syncMobileCartBar();
 
     const checkoutSuccessModal = document.getElementById('checkoutSuccessModal');
     if (checkoutSuccessModal) {
@@ -38,7 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
             checkoutSuccessModal.remove();
         };
 
-        checkoutSuccessModal.querySelector('[data-close-checkout-modal]').addEventListener('click', closeCheckoutModal);
+        const closeBtn = checkoutSuccessModal.querySelector('[data-close-checkout-modal]');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeCheckoutModal);
+        }
+
         checkoutSuccessModal.addEventListener('click', function (event) {
             if (event.target === checkoutSuccessModal) {
                 closeCheckoutModal();
@@ -51,40 +84,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    document.querySelectorAll('[data-cart-form]').forEach(function (form) {
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault();
+    // Use event delegation for all [data-cart-form] submissions
+    document.addEventListener('submit', async function (event) {
+        const form = event.target.closest('[data-cart-form]');
+        if (!form) {
+            return;
+        }
 
-            const button = form.querySelector('button[type="submit"]');
+        event.preventDefault();
+
+        const button = form.querySelector('button[type="submit"]');
+        if (button) {
             button.disabled = true;
+        }
 
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        Accept: 'text/html',
-                    },
-                });
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Accept: 'text/html',
+                },
+            });
 
-                if (!response.ok) {
-                    throw new Error('Gagal memperbarui keranjang.');
-                }
-
-                const html = await response.text();
-                const documentFragment = new DOMParser().parseFromString(html, 'text/html');
-                const updatedCart = documentFragment.querySelector('#cartPanel');
-
-                if (!updatedCart) {
-                    throw new Error('Panel keranjang tidak ditemukan.');
-                }
-
-                document.getElementById('cartPanel').outerHTML = updatedCart.outerHTML;
-                initializePaymentPreview();
-            } catch (error) {
-                window.location.reload();
+            if (!response.ok) {
+                throw new Error('Gagal memperbarui keranjang.');
             }
-        });
+
+            const html = await response.text();
+            const documentFragment = new DOMParser().parseFromString(html, 'text/html');
+            const updatedCart = documentFragment.querySelector('#cartPanel');
+
+            if (!updatedCart) {
+                throw new Error('Panel keranjang tidak ditemukan.');
+            }
+
+            const existingCart = document.getElementById('cartPanel');
+            if (existingCart) {
+                existingCart.outerHTML = updatedCart.outerHTML;
+            }
+
+            initializePaymentPreview();
+            syncMobileCartBar();
+        } catch (error) {
+            window.location.reload();
+        } finally {
+            if (button) {
+                button.disabled = false;
+            }
+        }
     });
 });

@@ -19,12 +19,12 @@ class DatabaseSeeder extends Seeder
 
         User::updateOrCreate(
             ['email' => 'admin@example.com'],
-            ['name' => 'Admin', 'password' => bcrypt('admin123')]
+            ['name' => 'Admin', 'role' => 'admin', 'password' => bcrypt('admin123')]
         );
 
         User::updateOrCreate(
             ['email' => 'test@example.com'],
-            ['name' => 'Test User', 'password' => bcrypt('password')]
+            ['name' => 'Kasir', 'role' => 'kasir', 'password' => bcrypt('password')]
         );
     }
 }

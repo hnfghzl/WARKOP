@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
@@ -12,13 +13,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-    Route::post('/products/{product}/stock/add', [ProductController::class, 'addStock'])->name('products.stock.add');
-    Route::post('/products/{product}/stock/reduce', [ProductController::class, 'reduceStock'])->name('products.stock.reduce');
+    // Rute POS & Transaksi (Dapat diakses oleh Kasir & Admin)
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/cart/add', [PosController::class, 'addToCart'])->name('pos.cart.add');
     Route::post('/pos/cart/adjust', [PosController::class, 'adjustCartItem'])->name('pos.cart.adjust');
@@ -29,5 +24,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::get('/transactions/{transaction}/success', [TransactionController::class, 'success'])->name('transactions.success');
     Route::get('/transactions/{transaction}/receipt', [TransactionController::class, 'receipt'])->name('transactions.receipt');
-    Route::get('/reports', [TransactionController::class, 'reports'])->name('reports.index');
+
+    // Rute Khusus Administrator (Analitik Bisnis, Kelola Produk & Laporan Sensitif)
+    Route::middleware('admin')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::post('/products/{product}/stock/add', [ProductController::class, 'addStock'])->name('products.stock.add');
+        Route::post('/products/{product}/stock/reduce', [ProductController::class, 'reduceStock'])->name('products.stock.reduce');
+        Route::get('/reports', [TransactionController::class, 'reports'])->name('reports.index');
+
+        // Manajemen Akun Kasir
+        Route::get('/cashiers', [CashierController::class, 'index'])->name('cashiers.index');
+        Route::post('/cashiers', [CashierController::class, 'store'])->name('cashiers.store');
+        Route::put('/cashiers/{user}', [CashierController::class, 'update'])->name('cashiers.update');
+        Route::delete('/cashiers/{user}', [CashierController::class, 'destroy'])->name('cashiers.destroy');
+    });
 });
