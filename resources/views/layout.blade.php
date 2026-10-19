@@ -57,9 +57,9 @@
             <div class="w-full max-w-[1580px] bg-white/95 backdrop-blur-md rounded-[28px] sm:rounded-[36px] shadow-[0_20px_50px_rgba(79,70,229,0.08)] border border-white ring-1 ring-slate-900/5 flex flex-col lg:flex-row min-h-[92vh] relative">
                 
                 <!-- Left Vertical Icon Dock Sidebar (Full-height column with sticky floating dock) -->
-                <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 lg:w-20 -translate-x-full lg:translate-x-0 flex-col border-r border-slate-100 bg-white/95 lg:bg-slate-50/60 p-4 lg:p-2.5 transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:rounded-l-[28px] sm:lg:rounded-l-[36px]">
+                <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 lg:w-20 -translate-x-full lg:translate-x-0 flex-col border-r border-slate-100 bg-white/95 lg:bg-slate-50/60 p-4 lg:p-2.5 transition-transform duration-300 ease-in-out lg:relative lg:z-40 lg:rounded-l-[28px] sm:lg:rounded-l-[36px]">
                     <!-- Floating Dock: Follows page scroll dynamically on desktop -->
-                    <div id="sidebarFloatingDock" class="w-full flex-1 flex flex-col justify-between items-center lg:sticky lg:top-6 lg:self-start lg:h-[calc(100vh-3rem)] lg:max-h-[640px] px-1 py-1">
+                    <div id="sidebarFloatingDock" class="w-full flex-1 flex flex-col justify-between items-center lg:sticky lg:top-6 lg:self-start lg:h-[calc(100vh-3rem)] lg:max-h-[640px] px-1 py-1 relative z-40">
                         <!-- Top section: Avatar / Brand -->
                     <div class="flex flex-col items-center">
                         <div class="flex items-center justify-between w-full lg:justify-center">
@@ -70,6 +70,12 @@
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
                                 </div>
+                                <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                    <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                        <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                        {{ auth()->user()->name ?? 'Profil Admin' }}
+                                    </span>
+                                </span>
                             </a>
                             <!-- Close button for mobile -->
                             <button id="sidebarCloseBtn" type="button" class="lg:hidden p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100" onclick="document.getElementById('adminSidebar').classList.add('-translate-x-full'); document.getElementById('sidebarBackdrop').classList.add('hidden');">
@@ -94,8 +100,11 @@
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Dashboard</span>
                             <!-- Desktop Tooltip -->
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Dashboard
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Dashboard
+                                </span>
                             </span>
                         </a>
 
@@ -109,8 +118,11 @@
                                 <path d="M12 22V12"/>
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Produk</span>
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Produk
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Produk
+                                </span>
                             </span>
                         </a>
 
@@ -124,8 +136,11 @@
                                 <path d="M16 10a4 4 0 0 1-8 0"/>
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Point of Sale (Kasir)</span>
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Kasir / POS
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Kasir / POS
+                                </span>
                             </span>
                         </a>
 
@@ -140,8 +155,11 @@
                                 <path d="M8 17v-3"/>
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Laporan Penjualan</span>
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Laporan
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Laporan
+                                </span>
                             </span>
                         </a>
 
@@ -154,8 +172,11 @@
                                 <polyline points="22,6 12,13 2,6"/>
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Riwayat Transaksi</span>
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Transaksi
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Transaksi
+                                </span>
                             </span>
                         </a>
 
@@ -167,8 +188,11 @@
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                             </svg>
                             <span class="text-sm lg:hidden font-medium">Pengaturan</span>
-                            <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                Pengaturan (Segera)
+                            <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                <span class="relative px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-white/10">
+                                    <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></span>
+                                    Pengaturan
+                                </span>
                             </span>
                         </div>
                     </nav>
@@ -185,8 +209,11 @@
                                     <line x1="12" y1="2" x2="12" y2="12"/>
                                 </svg>
                                 <span class="text-sm lg:hidden font-medium text-rose-600">Keluar</span>
-                                <span class="hidden lg:block absolute left-16 px-2.5 py-1 bg-rose-600 text-white text-xs font-medium rounded-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 shadow-md">
-                                    Keluar
+                                <span class="hidden lg:flex items-center absolute left-14 top-1/2 -translate-y-1/2 pl-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 z-50">
+                                    <span class="relative px-3 py-1.5 bg-rose-600 text-white text-xs font-semibold rounded-xl whitespace-nowrap shadow-xl ring-1 ring-rose-500/20">
+                                        <span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-rose-600 rotate-45"></span>
+                                        Keluar
+                                    </span>
                                 </span>
                             </button>
                         </form>

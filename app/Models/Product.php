@@ -17,6 +17,15 @@ class Product extends Model
         'image',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'buy_price' => 'integer',
+            'sell_price' => 'integer',
+            'stock' => 'integer',
+        ];
+    }
+
     public function transactionItems()
     {
         return $this->hasMany(TransactionItem::class);

@@ -559,7 +559,33 @@ class POSFeatureTest extends TestCase
         $response = $this->actingAs($user)->get('/products');
 
         $response->assertStatus(200)
-            ->assertSee('Daftar Produk');
+            ->assertSee('Daftar Produk')
+            ->assertSee('Tambah Produk')
+            ->assertSee('id="productFormContainer" data-is-editing="false" class="hidden', false);
+    }
+
+    public function test_products_page_shows_form_when_editing_or_create_requested(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::create([
+            'name' => 'Kopi Arabika',
+            'sku' => 'ARB-001',
+            'stock' => 10,
+            'buy_price' => 5000,
+            'sell_price' => 12000,
+        ]);
+
+        // When create query param is passed
+        $responseCreate = $this->actingAs($user)->get('/products?create=1');
+        $responseCreate->assertStatus(200)
+            ->assertDontSee('id="productFormContainer" data-is-editing="false" class="hidden', false);
+
+        // When edit query param is passed
+        $responseEdit = $this->actingAs($user)->get('/products?edit='.$product->id);
+        $responseEdit->assertStatus(200)
+            ->assertSee('Edit Produk')
+            ->assertSee('Batal edit')
+            ->assertDontSee('id="productFormContainer" data-is-editing="true" class="hidden', false);
     }
 
     public function test_dashboard_period_filters_calculate_correctly(): void
